@@ -358,6 +358,8 @@ mirror_desc:
     desc: 为 GNU Radio 设计的编译管理系统
   - name: pypi
     desc: Python 软件包索引源
+  - name: python
+    desc: Python 官方源码、软件、文档仓库
   - name: qemu.git
     desc: 处理器模拟器 QEMU 的源码 Git 仓库
   - name: qubesos
@@ -454,8 +456,7 @@ mirror_desc:
     desc: 著名的网络监视、管理系统
 
 new_mirrors:
-  - mozilla
-  - debian-elts
+  - python
 
 unlisted_mirrors:
   - status: 'success'
@@ -548,7 +549,6 @@ force_redirect_help_mirrors:
   - binutils-gdb.git
   - glibc.git
   - flutter-sdk.git
-  - julia-general.git
   - pkgsrc.git
   - nixpkgs.git
   - ohmyzsh.git
