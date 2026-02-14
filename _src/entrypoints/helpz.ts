@@ -1,4 +1,5 @@
 import "./help";
+import { useCopyCode } from './copyCode';
 import "../styles/helpz.scss";
 import hljs from "../lib/hljs";
 import { mirrorId } from "../lib/mirrorid";
@@ -46,13 +47,25 @@ function renderCode(tmpl) {
   const div = tmpl.previousElementSibling;
   // find form.z-form
   const form = div.querySelector("form.z-form");
+
+  // create a code wrapper
+  const codeWrapper = document.createElement("div");
+  codeWrapper.className = "code-wrapper";
+  const copyBtn = document.createElement("button");
+  copyBtn.className = "copy";
+  copyBtn.title = "Copy Code";
+  codeWrapper.append(copyBtn);
+
   // find form.z-code
-  var code = div.querySelector("pre.z-code");
+  let code = div.querySelector("pre.z-code");
   if (code === null) {
     code = document.createElement("pre");
     code.classList.add("z-code");
-    div.appendChild(code);
   }
+  // add code to the code wrapper
+  codeWrapper.append(code);
+  div.appendChild(codeWrapper);
+
   if (form) Object.assign(conf, generateFormConfig(form));
   conf.endpoint = conf.scheme + "://" + conf.host + conf.path;
 
@@ -63,6 +76,9 @@ function renderCode(tmpl) {
     {},
     { escape: (x) => x },
   );
+
+  code.dataset.rawCode = rendered;
+
   try {
     const lang = tmpl.attributes.getNamedItem("z-lang");
     if (lang && hljs.getLanguage(lang.value)) {
@@ -97,6 +113,7 @@ if (GLOBAL_CONFIG.filter && GLOBAL_CONFIG.filter.scheme) {
 
 // Render code
 renderForm(null);
+useCopyCode();
 
 const ignoreEventHandler = (event) => event.preventDefault();
 
