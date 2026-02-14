@@ -1,0 +1,12 @@
+{
+    "image": "tunathu/mirror-web:latest",
+    
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:1": {},
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+
+    "forwardPorts": [4000],
+    "overrideCommand": true,
+    "remoteUser": "root"
+}
