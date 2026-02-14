@@ -1,3 +1,12 @@
 .z-help pre.z-tmpl {
   display: none;
 }
+
+pre.z-code {
+  padding: 0.875rem !important;
+}
+
+// make sure the copy button's position: absolute works
+.code-wrapper {
+  position: relative;
+}

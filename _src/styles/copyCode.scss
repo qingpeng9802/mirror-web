@@ -1,0 +1,102 @@
+@use "./utils.scss" as utils;
+
+:root {
+  /* clipboard */
+  --vp-icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/g%3E%3C/svg%3E");
+  /* clipboard-check */
+  --vp-icon-copied: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(128,128,128,1)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3Cpath d='m9 14l2 2l4-4'/%3E%3C/g%3E%3C/svg%3E");
+
+  --vp-code-copy-copied-text-content: 'Copied';
+
+  --vp-code-copy-code-border-color: var(--bs-light-border-subtle);
+  --vp-code-copy-code-bg: var(--bs-tertiary-bg);
+  --vp-code-copy-code-hover-border-color: var(--bs-dark-border-subtle);
+  --vp-code-copy-code-hover-bg: var(--bs-secondary-bg);
+  --vp-code-copy-code-active-text: var(--bs-secondary-text-emphasis);
+
+  @include utils.dark {
+    --vp-code-copy-code-border-color: var(--bs-dark-border-subtle);
+    --vp-code-copy-code-bg: var(--bs-tertiary-bg);
+    --vp-code-copy-code-hover-border-color: var(--bs-light-border-subtle);
+    --vp-code-copy-code-hover-bg: var(--bs-secondary-bg);
+    --vp-code-copy-code-active-text: var(--bs-secondary-text-emphasis);
+  }
+}
+
+// https://github.com/vuejs/vitepress/blob/v2.0.0-alpha.16/src/client/theme-default/styles/components/vp-doc.css#L440-L508
+div[class*="code-wrapper"]>button.copy {
+  padding: 0;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  touch-action: manipulation;
+  box-sizing: border-box;
+
+  /*rtl:ignore*/
+  direction: ltr;
+  position: absolute;
+  top: 0.25rem;
+  /*rtl:ignore*/
+  right: 0.25rem;
+  z-index: 3;
+  border: 1px solid var(--vp-code-copy-code-border-color);
+  border-radius: 0.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--vp-code-copy-code-bg);
+  opacity: 0;
+  cursor: pointer;
+  background-image: var(--vp-icon-copy);
+  background-position: 50%;
+  background-size: 1.25rem;
+  background-repeat: no-repeat;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s,
+    opacity 0.25s;
+}
+
+div[class*="code-wrapper"]:hover>button.copy,
+div[class*="code-wrapper"]>button.copy:focus {
+  opacity: 1;
+}
+
+div[class*="code-wrapper"]>button.copy:hover,
+div[class*="code-wrapper"]>button.copy.copied {
+  border-color: var(--vp-code-copy-code-hover-border-color);
+  background-color: var(--vp-code-copy-code-hover-bg);
+}
+
+div[class*="code-wrapper"]>button.copy.copied,
+div[class*="code-wrapper"]>button.copy:hover.copied {
+  /*rtl:ignore*/
+  border-radius: 0 0.25rem 0.25rem 0;
+  background-color: var(--vp-code-copy-code-hover-bg);
+  background-image: var(--vp-icon-copied);
+}
+
+div[class*="code-wrapper"]>button.copy.copied::before,
+div[class*="code-wrapper"]>button.copy:hover.copied::before {
+  position: relative;
+  top: -1px;
+  /*rtl:ignore*/
+  transform: translateX(calc(-100% - 1px));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--vp-code-copy-code-hover-border-color);
+  /*rtl:ignore*/
+  border-right: 0;
+  /*rtl:ignore*/
+  border-radius: 0.25rem 0 0 0.25rem;
+  padding: 0 0.625rem;
+  width: fit-content;
+  height: 2.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--vp-code-copy-code-active-text);
+  background-color: var(--vp-code-copy-code-hover-bg);
+  white-space: nowrap;
+  content: var(--vp-code-copy-copied-text-content);
+}
