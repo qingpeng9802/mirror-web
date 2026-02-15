@@ -1,5 +1,5 @@
 import "./help";
-import { useCopyCode } from './copyCode';
+import { useCopyCode } from '../lib/copyCode';
 import "../styles/helpz.scss";
 import hljs from "../lib/hljs";
 import { mirrorId } from "../lib/mirrorid";
@@ -48,13 +48,20 @@ function renderCode(tmpl) {
   // find form.z-form
   const form = div.querySelector("form.z-form");
 
-  // create a code wrapper
-  const codeWrapper = document.createElement("div");
-  codeWrapper.className = "code-wrapper";
-  const copyBtn = document.createElement("button");
-  copyBtn.className = "copy";
-  copyBtn.title = "Copy Code";
-  codeWrapper.append(copyBtn);
+  let codeWrapper = div.querySelector(".code-wrapper");
+
+  if (codeWrapper === null) {
+    codeWrapper = document.createElement("div");
+    codeWrapper.className = "code-wrapper";
+
+    const copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.className = "copy";
+    copyBtn.title = "Copy Code";
+    copyBtn.setAttribute("aria-label", "Copy Code");
+
+    codeWrapper.append(copyBtn);
+  }
 
   // find form.z-code
   let code = div.querySelector("pre.z-code");

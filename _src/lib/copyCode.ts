@@ -58,7 +58,7 @@ async function copyToClipboard(text: string) {
     element.selectionStart = 0;
     element.selectionEnd = text.length;
 
-    document.execCommand('copy');
+    const successful = document.execCommand('copy');
     document.body.removeChild(element);
 
     if (originalRange) {
@@ -69,6 +69,10 @@ async function copyToClipboard(text: string) {
     // Get the focus back on the previously focused element, if any
     if (previouslyFocusedElement) {
       (previouslyFocusedElement as HTMLElement).focus();
+    }
+
+    if (!successful) {
+      return Promise.reject("Clipboard and fallback both failed.");
     }
   }
 }
