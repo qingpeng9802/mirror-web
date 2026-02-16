@@ -69,9 +69,14 @@ function renderCode(tmpl) {
     code = document.createElement("pre");
     code.classList.add("z-code");
   }
-  // add code to the code wrapper
-  codeWrapper.append(code);
-  div.appendChild(codeWrapper);
+  // add code to the code wrapper only if not already there
+  if (code.parentElement !== codeWrapper) {
+    codeWrapper.append(code);
+  }
+  // add code wrapper to div.z-wrap only if not already there
+  if (codeWrapper.parentElement !== div) {
+    div.append(codeWrapper);
+  }
 
   if (form) Object.assign(conf, generateFormConfig(form));
   conf.endpoint = conf.scheme + "://" + conf.host + conf.path;
